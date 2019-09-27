@@ -1,6 +1,6 @@
 ## 币身份
 
-Hid is a public, permissionless, Decentralized Identifier (DID) network that implements the blockchain-agnostic Sidetree protocol on top of  (as a 'Layer 2' overlay) to support DIDs/DPKI (Decentralized Public Key Infrastructure) at scale.
+Hid is a public, permissionless, Decentralized Identifier (DID) network that implements the blockchain-agnostic [DsLink](https://github.com/ecslew/dslink)  protocol on top of  (as a 'Layer 2' overlay) to support DIDs/DPKI (Decentralized Public Key Infrastructure) at scale.
 
 ## Key Points:
 
