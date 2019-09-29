@@ -2,15 +2,15 @@ import * as getRawBody from 'raw-body';
 import * as Koa from 'koa';
 import * as Router from 'koa-router';
 import {
-  SidetreeConfig,
-  SidetreeCore,
-  SidetreeResponse,
-  SidetreeResponseModel
-} from '@decentralized-identity/sidetree';
-import { ProtocolVersionModel } from '@decentralized-identity/sidetree/dist/lib/core/VersionManager';
+  DsLinkConfig,
+  DsLinkCore,
+  DsLinkResponse,
+  DsLinkResponseModel
+} from '@decentralized-identity/DsLink';
+import { ProtocolVersionModel } from '@decentralized-identity/DsLink/dist/lib/core/VersionManager';
 
 /** Configuration used by this server. */
-interface ServerConfig extends SidetreeConfig {
+interface ServerConfig extends DsLinkConfig {
   /** Port to be used by the server. */
   port: number;
 }
@@ -18,7 +18,7 @@ interface ServerConfig extends SidetreeConfig {
 const config: ServerConfig = require('../json/core-config.json');
 const protocolVersions: ProtocolVersionModel[] = require('../json/core-protocol-versioning.json');
 
-const sidetreeCore = new SidetreeCore(config, protocolVersions);
+const DsLinkCore = new DsLinkCore(config, protocolVersions);
 const app = new Koa();
 
 // Raw body parser.
@@ -29,17 +29,17 @@ app.use(async (ctx, next) => {
 
 const router = new Router();
 router.post('/', async (ctx, _next) => {
-  const response = await sidetreeCore.handleOperationRequest(ctx.body);
+  const response = await DsLinkCore.handleOperationRequest(ctx.body);
   setKoaResponse(response, ctx.response);
 });
 
 router.get('/version', async (ctx, _next) => {
-  const response = await sidetreeCore.handleGetVersionRequest();
+  const response = await DsLinkCore.handleGetVersionRequest();
   setKoaResponse(response, ctx.response);
 });
 
 router.get('/:didOrDidDocument', async (ctx, _next) => {
-  const response = await sidetreeCore.handleResolveRequest(ctx.params.didOrDidDocument);
+  const response = await DsLinkCore.handleResolveRequest(ctx.params.didOrDidDocument);
   setKoaResponse(response, ctx.response);
 });
 
@@ -51,22 +51,22 @@ app.use((ctx, _next) => {
   ctx.response.status = 400;
 });
 
-sidetreeCore.initialize()
+DsLinkCore.initialize()
 .then(() => {
   const port = config.port;
   app.listen(port, () => {
-    console.log(`Sidetree node running on port: ${port}`);
+    console.log(`DsLink node running on port: ${port}`);
   });
 })
 .catch((error: Error) => {
-  console.log(`Sidetree node initialization failed with error ${error}`);
+  console.log(`DsLink node initialization failed with error ${error}`);
 });
 
 /**
- * Sets the koa response according to the Sidetree response object given.
+ * Sets the koa response according to the DsLink response object given.
  */
-const setKoaResponse = (response: SidetreeResponseModel, koaResponse: Koa.Response) => {
-  koaResponse.status = SidetreeResponse.toHttpStatus(response.status);
+const setKoaResponse = (response: DsLinkResponseModel, koaResponse: Koa.Response) => {
+  koaResponse.status = DsLinkResponse.toHttpStatus(response.status);
 
   if (response.body) {
     koaResponse.set('Content-Type', 'application/json');
