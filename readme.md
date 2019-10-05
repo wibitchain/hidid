@@ -1,6 +1,6 @@
 ## [HiDID自主身份链](http://www.dslink.net/)
 
-HiDID is a public, permissionless, Decentralized Identifier (DID) network that implements the blockchain-agnostic [DsLink](https://github.com/ecslew/dslink)  protocol on top of  (as a 'Layer 2' overlay) to support DIDs/DPKI (Decentralized Public Key Infrastructure) at scale.
+HiDID is a public, permissionless, Decentralized Identifier (DID) network that implements the blockchain [DsLink](https://github.com/ecslew/dslink)  protocol on top of  (as a 'Layer 2' overlay) to support DIDs/DPKI (Decentralized Public Key Infrastructure) at scale.
 
 ## Key Points:
 
